@@ -8,7 +8,13 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// ✅ Proper CORS config
+app.use(cors({
+  origin: "http://localhost:3000", // apna frontend URL daalo
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/authRoutes"));
