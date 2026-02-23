@@ -8,18 +8,27 @@ connectDB();
 
 const app = express();
 
-// ✅ Proper CORS config
+// ✅ Allow localhost frontend
 app.use(cors({
-  origin: "http://localhost:3000", // apna frontend URL daalo
+  origin: "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
+app.options("*", cors()); // Handle preflight
+
 app.use(express.json());
 
+// Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/banner", require("./routes/bannerRoutes"));
 app.use("/api/dashboard", require("./routes/dashboardRoutes"));
+
+
+// Test route
+app.get("/", (req, res) => {
+  res.send("API Running on Render 🚀");
+});
 
 const PORT = process.env.PORT || 9003;
 
